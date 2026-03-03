@@ -43,7 +43,18 @@ If you use this code in your research, kindly cite:
 
 ## 🛠️ Installation
 
-### Create Conda Environment
+### Install with uv (recommended)
+
+```bash
+uv sync
+```
+
+Then prefix all commands with `uv run`, e.g.:
+```bash
+uv run python train_squint.py --env_id=SO101LiftCube-v1
+```
+
+### Alternative: Conda
 
 ```bash
 conda env create -f environment.yaml
@@ -57,7 +68,7 @@ conda activate squint
 Train an agent on the LiftCube task:
 
 ```bash
-python train_squint.py --env_id=SO101LiftCube-v1
+uv run python train_squint.py --env_id=SO101LiftCube-v1
 ```
 
 ### Training with Weights & Biases Logging
@@ -66,7 +77,7 @@ We use wandb [(weights and biases)](https://wandb.ai/) for logging, uploading sa
 We recommend creating a wandb account, and then enabling `--track` flag and filling the `--wandb_entity` flag in `train_squint.py`. Or you can override with the commandline:
 
 ```bash
-python train_squint.py \
+uv run python train_squint.py \
     --env_id=SO101LiftCube-v1 \
     --track \
     --wandb_entity=YOUR_WANDB_USERNAME
@@ -79,7 +90,7 @@ At the end of training, the last checkpoint saved will be uploaded to wandb. You
 You can visualize all available environments (8 environments) by running:
 
 ```bash
-python examples/visualize_sim.py
+uv run python examples/visualize_sim.py
 ```
 
 ### Available Environments (SO-101 Task Set)
@@ -148,7 +159,7 @@ provided in `envs/black_overlay.png`. Below, we show a visual of the Simulation 
 If your table has a different background or color, take a photo, save it, and then edit the Randomization Config in [`envs/base_random_env.py`](envs/base_random_env.py#L59) to point to your image. Once you have your image in the background, align your real camera view with the simulation:
 
 ```bash
-python deploy_utils/tune_camera.py
+uv run python deploy_utils/tune_camera.py
 ```
 </br>
 <img width="100%" src="https://github.com/aalmuzairee/squint/blob/gh-pages/static/extras/imgs/tune_camera_with_box_example.png">
@@ -163,7 +174,7 @@ the wrist camera parameters, and then copy these parameters straight to wrist ca
 Run your trained agent on the real robot:
 
 ```bash
-python deploy.py \
+uv run python deploy.py \
     --checkpoint=path/to/ckpt.pt \
     --env_id=SO101LiftCube-v1
 ```
@@ -171,7 +182,7 @@ python deploy.py \
 If you trained with wandb, your last checkpoint should have been uploaded to wandb. You can deploy it by running:
 
 ```bash
-python deploy.py \
+uv run python deploy.py \
     --checkpoint=wandb \
     --env_id=SO101LiftCube-v1 \
     --wandb_entity=YOUR_WANDB_USERNAME
@@ -196,7 +207,8 @@ squint/
 ├── train_squint.py          # Main training script
 ├── deploy.py                # Real robot deployment
 ├── utils.py                 # Training utilities
-├── environment.yaml         # Conda environment
+├── pyproject.toml           # uv dependencies (recommended)
+├── environment.yaml         # Conda environment (alternative)
 ├── envs/                    # Custom ManiSkill environments
 │   ├── base_random_env.py   # Base env with domain randomization
 │   ├── black_overlay.png    # Background overlay for sim-to-real
