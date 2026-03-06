@@ -86,6 +86,8 @@ class Args:
     """the number of parallel environments"""
     num_eval_envs: int = 16
     """the number of parallel evaluation environments"""
+    sim_backend: str = "gpu"
+    """simulation backend: 'gpu' (requires compatible GPU) or 'cpu'"""
     partial_reset: bool = False
     """whether to let parallel environments reset upon termination instead of truncation"""
     eval_partial_reset: bool = False
@@ -575,9 +577,9 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() and args.cuda else "cpu")
 
     # ── Environment setup ──────────────────────────────────────────────────
-    env_kwargs = dict(obs_mode=args.obs_mode, render_mode=args.render_mode, sim_backend="gpu",
+    env_kwargs = dict(obs_mode=args.obs_mode, render_mode=args.render_mode, sim_backend=args.sim_backend,
                       sensor_configs=dict(width=args.render_size, height=args.render_size))
-    eval_env_kwargs = dict(obs_mode=args.obs_mode, render_mode=args.render_mode, sim_backend="gpu",
+    eval_env_kwargs = dict(obs_mode=args.obs_mode, render_mode=args.render_mode, sim_backend=args.sim_backend,
                            sensor_configs=dict(width=args.render_size, height=args.render_size),
                            human_render_camera_configs=dict(shader_pack="default", width=args.render_size, height=args.render_size))
     if args.control_mode is not None:

@@ -15,22 +15,16 @@ def create_real_robot() -> Robot:
         Configured Robot instance 
     """
     robot_config = SO101FollowerConfig(
-        port="/dev/ttyACM0",  # CHANGE THIS: your robot's serial port
+        port="/dev/ttyACM1",
         use_degrees=True,
         cameras={"base_camera": OpenCVCameraConfig(
-            index_or_path="/dev/video0",  # CHANGE THIS: your webcam device path
+            index_or_path=0,
             fps=30,
             width=640,
             height=480
         )},
-        # cameras={"base_camera": RealSenseCameraConfig(
-        #     serial_number_or_name="053645021390",  
-        #     fps=30,
-        #     width=640,
-        #     height=480
-        # )},
-        id="so101_follower_arm", # CHANGE THIS: your calibration file name
-        calibration_dir=Path(__file__).parent,  # CHANGE THIS: path to calibration file directory
+        id="mos_follower_arm",
+        calibration_dir=Path("/home/moaaz/dev/dawn/huggingface/lerobot/calibration/robots/so101_follower"),
     )
 
     return make_robot_from_config(robot_config)

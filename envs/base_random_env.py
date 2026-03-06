@@ -56,7 +56,7 @@ class RandomizationConfig:
     """Noise scale for initial robot joint positions."""
     apply_overlay: bool = True
     """Whether to apply background overlay (greenscreen). If False, returns raw simulation images."""
-    rgb_overlay_path: Optional[str] = os.path.join(os.path.dirname(__file__), "black_overlay.png")
+    rgb_overlay_path: Optional[str] = os.path.join(os.path.dirname(__file__), "..", "background.png")
     """Path to background image. If None and apply_overlay=True, uses black background."""
 
     # === Common randomization settings (affected by domain_randomization flag) ===

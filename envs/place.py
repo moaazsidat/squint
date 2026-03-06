@@ -128,7 +128,9 @@ class Place(DefaultCameraEnv):
 
         # Default values
         colors = np.zeros((self.num_envs, 3))
-        colors[:, 0] = 1  # Red
+        colors[:, 0] = 0.686  # Lego red (#af231c)
+        colors[:, 1] = 0.137
+        colors[:, 2] = 0.110
         cfg = self.domain_randomization_config
         frictions = np.ones(self.num_envs) * (cfg.item_friction_range[0] + cfg.item_friction_range[1]) / 2
         densities = np.ones(self.num_envs) * (cfg.item_density_range[0] + cfg.item_density_range[1]) / 2
@@ -252,7 +254,7 @@ class Place(DefaultCameraEnv):
         self.add_to_state_dict_registry(self.item)
 
         # Build bins (per-env for domain randomization)
-        bin_color = sapien.render.RenderMaterial(base_color=[1.0, 1.0, 1.0, 1.0])
+        bin_color = sapien.render.RenderMaterial(base_color=[0.165, 0.275, 0.412, 1.0])  # Blue tray (#2b3d57)
         thickness = 0.005
         self.bin_thickness = thickness
 
